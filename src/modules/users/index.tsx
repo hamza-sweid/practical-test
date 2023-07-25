@@ -143,16 +143,16 @@ const TableComponent = () => {
                 <td>{row.fullName}</td>
                 <td>{row.age}</td>
                 <td>{row.email}</td>
-                {userRole === 'admin' && (
-                  <td className={style.action}>
+                <td className={style.action}>
+                  {userRole === 'admin' && (
                     <button
                       className={style.editButton}
                       onClick={() => handleEditClick(row)}
                     >
                       Edit
                     </button>
-                  </td>
-                )}
+                  )}
+                </td>
               </tr>
             ))}
           </tbody>
