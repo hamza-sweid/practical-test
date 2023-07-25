@@ -6,6 +6,7 @@ import { getUsers } from '../../services/users';
 import { User } from '../../interface/users';
 import { getUserRole, logout } from '../../services/auth';
 import { useNavigate } from 'react-router-dom';
+import { setMessage } from '../../utils/message';
 
 interface SortConfig {
   key: string | null;
@@ -19,6 +20,7 @@ const TableComponent = () => {
   const [filters, setFilters] = useState({
     name: '',
     age: '',
+    email: '',
   });
   const [sortConfig, setSortConfig] = useState<SortConfig>({
     key: null,
@@ -42,20 +44,23 @@ const TableComponent = () => {
 
   const handleLogout = () => {
     logout();
+    setMessage({
+      type: 'success',
+      content: 'Logout Successful',
+    });
     navigate('/login');
   };
 
-  const handleFilterChange = (event: any) => {
+  const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFilters((prevFilters) => ({ ...prevFilters, [name]: value }));
   };
 
   const filteredData = tableData.filter((row) => {
     return (
-      row.email.toLowerCase().includes(filters.name.toLowerCase()) &&
       row.age.toString().includes(filters.age) &&
-      row.fullName.toLowerCase().includes(filters.name.toLowerCase())
-      // Add more filters for other columns here if needed
+      row.fullName.toLowerCase().includes(filters.name.toLowerCase()) &&
+      row.email.toLowerCase().includes(filters.email.toLowerCase())
     );
   });
 
@@ -89,6 +94,10 @@ const TableComponent = () => {
   };
 
   const handleSubmit = async (values: User) => {
+    setMessage({
+      type: 'success',
+      content: 'User Updated Successfully',
+    });
     setShowPopup(false);
   };
 
@@ -124,9 +133,17 @@ const TableComponent = () => {
             />
             <span>Search by Age</span>
           </label>
+          <label className={inputStyle.inputContainer}>
+            <input
+              type="text"
+              name="email"
+              placeholder="Email"
+              value={filters.email}
+              onChange={handleFilterChange}
+            />
+            <span>Search by Email</span>
+          </label>
         </div>
-
-        {/* Add more inputs for other columns here if needed */}
 
         <table className={style.customTable}>
           <thead>
@@ -157,6 +174,9 @@ const TableComponent = () => {
             ))}
           </tbody>
         </table>
+        {filteredData.length === 0 && (
+          <p className={style.noData}>No Data Available</p>
+        )}
 
         {showPopup && (
           <Popup

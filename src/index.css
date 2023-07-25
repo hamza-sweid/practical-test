@@ -69,3 +69,30 @@ button:hover {
 .my-4 {
   margin: 1rem 0;
 }
+
+
+.notif {
+  position: fixed;
+  top: -40px;
+  transition: .5s;
+}
+
+.show {
+  top: 10px;
+}
+
+.notification {
+  border-radius: 5px;
+  padding: 7px 15px;
+  font-size: 14px;
+}
+
+.error {
+  background-color: #f44336;
+  color: #fff;
+}
+
+.success {
+  background-color: #4CAF50;
+  color: #fff;
+}

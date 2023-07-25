@@ -1,19 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { validateEmail } from '../../../utils/validator';
 import { Login, setIsUserLoggedIn, setUserRole } from '../../../services/auth';
 import { UserAuth } from '../../../interface/login';
-import Message from '../../../components/message';
 import { useNavigate } from 'react-router-dom';
-import style from '../../../styles/login.module.scss';
+import style from '../../../styles/pages/login.module.scss';
+import { setMessage } from '../../../utils/message';
 
 const LoginPage = (props: any) => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [showUser, setShowUser] = useState(false);
-  const [error, setError] = useState('');
-  const [showMessage, setShowMessage] = useState(false);
-  const [message, setMessage] = useState('');
   const isUserLoggedIn = localStorage.getItem('isUserLoggedIn');
 
   useEffect(() => {
@@ -24,10 +20,7 @@ const LoginPage = (props: any) => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    setShowUser(false);
     if (validateEmail(email)) {
-      setShowUser(true);
-      setError('');
       try {
         const users: any = await Login();
         const user: UserAuth = users.find(
@@ -36,60 +29,43 @@ const LoginPage = (props: any) => {
         if (user) {
           setUserRole(user.role);
           setIsUserLoggedIn(true);
-          setMessage('Login successful');
-          setShowMessage(true);
-          setError('');
+          setMessage({
+            type: 'success',
+            content: 'Login Successful',
+          });
           navigate('/users');
         } else {
-          setShowMessage(true);
-          setError('Invalid username or password');
-          setMessage('Invalid username or password');
+          setMessage({
+            type: 'error',
+            content: 'Invalid value entered. Please try again.',
+          });
+          setMessage({
+            type: 'error',
+            content: 'Invalid User Name or Password',
+          });
         }
       } catch (error) {
-        setShowMessage(true);
-        setError('Error fetching user data. Please try again later.');
-        setMessage('Error fetching user data. Please try again later.');
+        setMessage({
+          type: 'error',
+          content: 'Error fetching data, please try again',
+        });
       }
       return;
     } else {
-      setShowMessage(true);
-      setError('Email is not valid');
-      setMessage('Email is not valid');
+      setMessage({
+        type: 'error',
+        content: 'Email is not valid',
+      });
     }
   };
 
   const resetForm = () => {
     setEmail('');
     setPassword('');
-    setError('Form Reset! Enter your Details Again');
-    console.log(error);
-    setShowUser(false);
-  };
-
-  const disableAlert = () => {
-    if (error !== '') {
-      setTimeout(() => {
-        setError('');
-        console.log(error);
-      });
-    }
-    if (showUser === true) {
-      setTimeout(() => {
-        setShowUser(false);
-      });
-    }
   };
 
   return (
     <>
-      {showMessage && (
-        <Message
-          message={message}
-          duration={2}
-          status={error ? 'error' : 'success'}
-          // onClose={handleCloseMessage}
-        />
-      )}
       <div className={style.login}>
         <div className={style.authContainer}>
           <h2>Login</h2>
@@ -122,7 +98,6 @@ const LoginPage = (props: any) => {
 
             <button
               className={style.submitBtn + ' my-4'}
-              onClick={disableAlert}
               id="btn"
               type="submit"
             >
@@ -132,7 +107,6 @@ const LoginPage = (props: any) => {
           <button
             onClick={() => {
               resetForm();
-              disableAlert();
             }}
             id="btn"
             data-testid="reset"
