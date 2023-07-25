@@ -4,7 +4,7 @@ Welcome to my Practical Test APP! This app allows you to log in using your email
 
 <h2>How to Access the App</h2>
 
-To access the app, simply go to the following link: https://hamza-sweid.github.io/login
+To access the app, simply go to the following link: https://hamza-sweid.github.io/practical-test/
 
 <h2>User Credentials</h2>
 
