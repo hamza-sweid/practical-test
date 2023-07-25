@@ -3,19 +3,29 @@
   height: 100vh;
   display: flex;
   margin: 0;
-  background-image: linear-gradient(79deg, #03645f, #264c5e, #004c63);
+  background-image: linear-gradient(79deg, #080b0a, #14272f, #363839);
+  .authContainer {
+    width: 100%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    border: 1px solid #ccc;
+    padding: 20px 40px;
+    .passwordError {
+      display: none;
+      font-size: 13px;
+      line-height: 18px;
+      color: #f00;
+      text-align: left;
+      padding: 5px 10px 0;
+    }
+    .showPassowrd {
+      display: block;
+    }
+  }
+  .submitBtn {
+    margin-top: 20px;
+  }
 }
 
-.authContainer {
-  width: 100%;
-  margin: auto;
-  display: flex;
-  flex-direction: column;
-  max-width: 400px;
-  border: 1px solid #ccc;
-  padding: 20px 40px;
-}
-
-.submitBtn {
-  margin-top: 20px;
-}

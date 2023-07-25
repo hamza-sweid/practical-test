@@ -21,17 +21,7 @@ code {
   font-family: sans-serif;
   color: white;
   margin: none;
-  /* background-image: linear-gradient(79deg, #03645f, #264c5e, #004c63); */
 }
-
-/* .login-form,
-.register-form {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  min-width: 400px
-} */
 
 .input-container {
   display: flex;

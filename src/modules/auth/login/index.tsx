@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { validateEmail } from '../../../utils/validator';
+import { validateEmail, validatePassword } from '../../../utils/validator';
 import { Login, setIsUserLoggedIn, setUserRole } from '../../../services/auth';
 import { UserAuth } from '../../../interface/login';
 import { useNavigate } from 'react-router-dom';
@@ -10,6 +10,7 @@ const LoginPage = (props: any) => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [passwordError, setPasswordError] = useState(false);
   const isUserLoggedIn = localStorage.getItem('isUserLoggedIn');
 
   useEffect(() => {
@@ -20,41 +21,49 @@ const LoginPage = (props: any) => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    if (validateEmail(email)) {
-      try {
-        const users: any = await Login();
-        const user: UserAuth = users.find(
-          (user: UserAuth) => user.email === email && user.password === password
-        );
-        if (user) {
-          setUserRole(user.role);
-          setIsUserLoggedIn(true);
-          setMessage({
-            type: 'success',
-            content: 'Login Successful',
-          });
-          navigate('/users');
-        } else {
-          setMessage({
-            type: 'error',
-            content: 'Invalid value entered. Please try again.',
-          });
-          setMessage({
-            type: 'error',
-            content: 'Invalid User Name or Password',
-          });
-        }
-      } catch (error) {
-        setMessage({
-          type: 'error',
-          content: 'Error fetching data, please try again',
-        });
-      }
-      return;
-    } else {
+    if (!validateEmail(email)) {
       setMessage({
         type: 'error',
         content: 'Email is not valid',
+      });
+      return;
+    }
+    if (!validatePassword(password)) {
+      setPasswordError(true);
+      setMessage({
+        type: 'error',
+        content: 'Password is not valid',
+      });
+      return;
+    }
+    try {
+      setPasswordError(false);
+      const users: any = await Login();
+      const user: UserAuth = users.find(
+        (user: UserAuth) => user.email === email && user.password === password
+      );
+      if (user) {
+        setUserRole(user.role);
+        setIsUserLoggedIn(true);
+        setMessage({
+          type: 'success',
+          content: 'Login Successful',
+        });
+        navigate('/users');
+      } else {
+        setMessage({
+          type: 'error',
+          content: 'Invalid value entered. Please try again.',
+        });
+        setMessage({
+          type: 'error',
+          content: 'Invalid User Name or Password',
+        });
+      }
+    } catch (error) {
+      setMessage({
+        type: 'error',
+        content: 'Error fetching data, please try again',
       });
     }
   };
@@ -94,6 +103,14 @@ const LoginPage = (props: any) => {
                 id="password"
                 placeholder="*********"
               />
+              <span
+                className={`${style.passwordError} ${
+                  passwordError && style.showPassowrd
+                }`}
+              >
+                Password should contains 8 character, 1 uppercase letter, 1
+                lowercase letter, and 1 special character
+              </span>
             </div>
 
             <button
