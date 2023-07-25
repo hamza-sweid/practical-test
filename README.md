@@ -1,46 +1,59 @@
-# Getting Started with Create React App
+#Practical Test APP
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Welcome to my Practical Test APP! This app allows you to log in using your email and password, view a list of users, and perform various actions based on your role. Here are some details about the app:
 
-## Available Scripts
+##How to Access the App
 
-In the project directory, you can run:
+To access the app, simply go to the following link:
 
-### `npm start`
+##User Credentials
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+The app uses a file called users.JSON to store user credentials. The file contains user information, including email, password, and role. There is one admin user and several regular users.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Admin Credentials:
 
-### `npm test`
+Email: sara@example.com
+Password: Sara@123
+Role: admin
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Regular User Credentials:
 
-### `npm run build`
+Email: jim@example.com
+Password: Jim@1234
+Role: user
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+##Logging In
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Navigate to the login page on the app.
+Enter your email and password.
+If the entered email or password does not match the validation criteria, a notification error will be shown.
+If the email and password match the validation criteria but the user is not found in the users.JSON file, an error message will be displayed.
+If the credentials are valid and the user is found in the file, you will be logged in successfully, and the app will redirect you to the users page.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+##Users Page
 
-### `npm run eject`
+On the users page, you will see a list of users fetched from the users.JSON file. If you logged in using the admin credentials, you will have the option to update the users by clicking the edit button next to each user. Regular users will not see the edit button.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+##Updating Users
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+If you are logged in as an admin, you can click the edit button next to a user to update their information.
+When you update a user, a notification will be shown indicating that the user has been successfully updated. However, please note that this is a front-end notification only, and the updates are not saved to the users.JSON file in the backend.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+##Unauthorized Access
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+If you try to navigate back to the login page after successfully logging in, you will not be allowed. The app will redirect you to the users page as you are already authenticated.
+If you attempt to access the users page without logging in successfully, you will be redirected to the login page to authenticate.
 
-## Learn More
+##Filtering Users
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+The users page provides inputs for filtering the user list. As you type in any input, the table will trigger the filter function, and the list will be updated in real-time based on the entered filter criteria.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+##Sorting Users
+
+The users table is sortable by clicking on the title of any column. Clicking on a column title will sort the users in ascending order based on that column. Clicking the same column title again will sort the users in descending order.
+
+##Logout
+
+You can log out of the app by clicking the logout button on the users page. After logging out, you will be redirected to the login page.
+
+Enjoy using my React app! If you encounter any issues or have any feedback, feel free to reach out to me. Happy exploring! 😄
