@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkpractical_test=self.webpackChunkpractical_test||[]).push([[949],{949:function(e){e.exports=JSON.parse('{"users":[{"email":"sara@gmail.com","password":"3232","role":"admin"},{"email":"jim@gmail.com","password":"2342","role":"user"},{"email":"pete@gmail.com","password":"532532","role":"user"}]}')}}]);
