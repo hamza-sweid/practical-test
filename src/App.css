@@ -1,5 +1,13 @@
 .App {
   text-align: center;
+  display: flex;
+  min-height: 100vh;
+  justify-content: center;
+  align-items: center;
+  font-family: sans-serif;
+  color: white;
+  margin: none;
+  /* background-image: linear-gradient(79deg, #03645f, #264c5e, #004c63); */
 }
 
 .App-logo {
